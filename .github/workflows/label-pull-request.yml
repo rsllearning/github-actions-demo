@@ -1,0 +1,19 @@
+name: Add Triage Label to Pull Request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  label-pr:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Add triage label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr edit "$PR_NUMBER" --add-label "triage"
